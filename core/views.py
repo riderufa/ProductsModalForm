@@ -2,6 +2,7 @@ import json
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from datetime import datetime
 
 from core.models import Product
 
@@ -15,6 +16,7 @@ def save_products(request):
     products = request.POST.getlist('products[]')[0]
     products = json.loads(products)
     for product in products:
+        date = product['date'] if product['date'] else datetime.now()
         status = product['status'] if product['status'] else 0
         price_dollar = product['currency_price'] if product['currency_price'] else 0
         kurs = product['redemption_rate'] if product['redemption_rate'] else 0
@@ -23,7 +25,7 @@ def save_products(request):
         price_dostavki = product['send_price'] if product['send_price'] else 0
         koef_dostavka = product['send_ratio'] if product['send_ratio'] else 0
         Product.objects.create(
-            date=product['date'],
+            date=date,
             brand=product['brand'],
             name=product['title'],
             status=status,
