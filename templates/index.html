@@ -97,19 +97,19 @@
 </script>
 
 <script>
-        $(document).on('keyup', 'input[name="currency_price"]', function () {
+        $(document).on('keyup click', 'input[name="currency_price"]', function () {
             get_sum()
         });
 </script>
 
 <script>
-        $(document).on('keyup', 'input[name="redemption_rate"]', function () {
+        $(document).on('keyup click', 'input[name="redemption_rate"]', function () {
             get_sum()
         });
 </script>
 
 <script>
-        $(document).on('keyup', 'input[name="redemption_ratio"]', function () {
+        $(document).on('keyup click', 'input[name="redemption_ratio"]', function () {
             get_sum()
         });
 </script>
@@ -155,7 +155,6 @@
             }
             products.push(product)
         }
-        {#data.append(JSON.stringify(products));#}
         data.append('products[]', JSON.stringify(products));
         $.ajax({
             type: "POST",
