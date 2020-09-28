@@ -65,8 +65,11 @@
     $(document).on('click', '#add_product', function (e) {
         e.preventDefault();
         product_count += 1;
-        $('<div class="d-inline" id="product' + product_count + '"></div><hr>')
+        $('<div class="d-inline" id="product' + product_count + '"></div>')
             .appendTo($('#products_list'));
+        $('<a id="delete_product" name="' + product_count +
+                '" class="d-inline btn btn-sm btn-outline-danger mr-1">Удалить</a>')
+                .appendTo($(`#product${product_count}`));
         $(
             '<label class="mr-2">Дата</label>' +
             '<input name="date" type="date" class="form-control d-inline col-1 mr-2" required>' +
@@ -91,7 +94,7 @@
             '<label class="mr-2">Стомость отправки за 1 кг</label>' +
             '<input name="send_price" type="number" class="form-control d-inline col-1 mr-2" required>' +
             '<label class="mr-2">Коэффифиент доставки</label>' +
-            '<input name="send_ratio" type="number" class="form-control d-inline col-1 mr-2" required>'
+            '<input name="send_ratio" type="number" class="form-control d-inline col-1 mr-2" required><hr>'
         ).appendTo($('#product' + product_count));
     });
 </script>
@@ -152,8 +155,8 @@
                 product['weight'] = $(`#product${i} > input[name="weight"]`).val();
                 product['send_price'] = $(`#product${i} > input[name="send_price"]`).val();
                 product['send_ratio'] = $(`#product${i} > input[name="send_ratio"]`).val();
+                products.push(product);
             }
-            products.push(product)
         }
         data.append('products[]', JSON.stringify(products));
         $.ajax({
@@ -174,5 +177,12 @@
     });
 </script>
 
+<script>
+    $(document).on('click', '#delete_product', function () {
+        div_id = $(this).prop('name');
+        $(`#product${div_id}`).remove();
+        get_sum();
+    });
+</script>
 </body>
 </html>
